@@ -9,7 +9,7 @@
 <meta name="apple-mobile-web-app-title" content="COURTBOARD">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>COURTBOARD™</title>
+<title>COURTBOARD™ v3.1</title>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-database-compat.js"></script>
 <style>
@@ -249,9 +249,19 @@ function filteredSounds(){
 
 function soundButton(i){
   const s=sounds[i], b=document.createElement("button");
-  b.className="sound"; b.innerHTML=`<button class="fav ${favourites.has(i)?"on":""}" aria-label="Favourite">${favourites.has(i)?"♥":"♡"}</button><span class="emoji">${s[2]}</span><span class="name">${s[1]}</span>`;
-  b.onclick=e=>{ if(e.target.classList.contains("fav"))return; sendSound(i,b); };
-  b.querySelector(".fav").onclick=e=>{e.stopPropagation(); favourites.has(i)?favourites.delete(i):favourites.add(i);localStorage.cbFavs=JSON.stringify([...favourites]);render();renderFavs();};
+  b.type="button";
+  b.className="sound";
+  b.innerHTML=`<span class="fav ${favourites.has(i)?"on":""}" role="button" aria-label="Favourite">${favourites.has(i)?"♥":"♡"}</span><span class="emoji">${s[2]}</span><span class="name">${s[1]}</span>`;
+  b.addEventListener("click",e=>{
+    if(e.target.classList.contains("fav")){
+      e.stopPropagation();
+      favourites.has(i)?favourites.delete(i):favourites.add(i);
+      localStorage.cbFavs=JSON.stringify([...favourites]);
+      render(); renderFavs();
+      return;
+    }
+    sendSound(i,b);
+  });
   return b;
 }
 

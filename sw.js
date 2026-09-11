@@ -1,4 +1,4 @@
-const CACHE = "courtboard-v3";
+const CACHE = "courtboard-v3-1";
 const CORE = ["./", "./index.html", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png"];
 
 self.addEventListener("install", event => {

@@ -9,7 +9,7 @@
 <meta name="apple-mobile-web-app-title" content="COURTBOARD">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<title>COURTBOARD™ v3.1</title>
+<title>COURTBOARD™ v3.2</title>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-database-compat.js"></script>
 <style>
@@ -283,10 +283,10 @@ $("#chaos").onclick=()=>{const pool=filteredSounds();if(pool.length)sendSound(po
 
 async function enableShared(){
   try{const C=window.AudioContext||window.webkitAudioContext;if(C){const c=new C();if(c.state==="suspended")await c.resume();const o=c.createOscillator(),g=c.createGain();g.gain.value=0;o.connect(g);g.connect(c.destination);o.start();o.stop(c.currentTime+.02);}}catch(e){}
-  shared=true; $("#sharedPill").textContent="🟢 Shared audio armed"; $("#sharedPill").classList.add("good"); $("#enableShared").textContent="✅ Shared Audio Enabled"; $("#sharedToggle").textContent="Disable"; toast("Shared audio armed");
+  shared=true; $("#sharedPill").textContent="🟢 Shared audio armed"; $("#sharedPill").classList.add("good"); $("#enableShared").textContent="✅ Shared Audio On — Tap to Disable"; $("#sharedToggle").textContent="Disable"; toast("Shared audio armed");
 }
 function disableShared(){shared=false;$("#sharedPill").textContent="🔇 Shared audio off";$("#sharedPill").classList.remove("good");$("#enableShared").textContent="🔊 Enable Shared Audio";$("#sharedToggle").textContent="Enable";}
-$("#enableShared").onclick=enableShared;
+$("#enableShared").onclick=()=>shared?disableShared():enableShared();
 $("#sharedToggle").onclick=()=>shared?disableShared():enableShared();
 
 $("#volume").value=volume;
